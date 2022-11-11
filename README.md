@@ -7,7 +7,7 @@ We give the video clip on how ConfFix repairs configuration compatibility issues
 
 # ConfFix benchmark
 
-The benchmark now contains 86 reproducible CC issues.
+The benchmark now contains 81 reproducible CC issues.
 For each issue, we provide:
 
 * The issue report
