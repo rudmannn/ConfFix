@@ -53,18 +53,23 @@ export PATH=$PATH:$ANDROID_AVD_HOME
 
 5. Create an folder under the SDK root named avds and create an Android emulator: avdmanager create avd -n emulator0 -k "system-images;android-23;google_apis;x86_64" -p avds/emulator0
 
-6. modify the emulator configuration to ensure optimal testing performance of testing tools:
+6. modify the emulator configuration to change the screen size of your emulator:
 In our evaluation, we set an emulator with 2GB RAM, 1GB SdCard, 1GB internal storage and 256MB heap size (the file for modification usually is: ~/.android/avd/emulator.avd/config.ini)
 
 7. Launch the emulator: ```emulator -avd emulator0 -no-window -no-audio -wipe-data -port 5554```
 
 
-### Install UIAutomator2
+### 2. Install UIAutomator2
 
 Install uiautomator2, which is used for executing test scripts
 ```
 pip3 install --upgrade --pre uiautomator2
 ```
+
+### 3. Run ConfFix
+
+To reproduce the experiment result, we have prepared a ```.sh``` file for each issue to run.
+
 
 ****
 Here are links.
