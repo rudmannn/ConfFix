@@ -38,3 +38,6 @@ In our evaluation, we set an emulator with 2GB RAM, 1GB SdCard, 1GB internal sto
 ```
 pip3 install --upgrade --pre uiautomator2
 ```
+
+****
+Here are links.
