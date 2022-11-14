@@ -1,1 +1,0 @@
-[this page](./issue_in_the_latest_version.htm)
