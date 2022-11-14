@@ -31,9 +31,9 @@ For each issue, we provide:
 ### 1. Create an emulator
 1. download Android SDK Command line tools [link](https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip)
 
-Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., /ssddata/yourname/SDK/android_sdk_linux). So now the tools path will be /ssddata/yourname/SDK/android_sdk_linux/tools
+Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., ```/ssddata/yourname/SDK/android_sdk_linux```). So now the tools path will be ```/ssddata/yourname/SDK/android_sdk_linux/tools```
 
-2. Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., /ssddata/yourname/SDK/android_sdk_linux). So now the tools path will be /ssddata/yourname/SDK/android_sdk_linux/tools
+2. Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., ```/ssddata/yourname/SDK/android_sdk_linux```). So now the tools path will be ```/ssddata/yourname/SDK/android_sdk_linux/tools```
 
 3. Navigate to the SDK root and type in the following commands to install necessary files for the SDK
 ```
@@ -52,10 +52,10 @@ export ANDROID_AVD_HOME=~/.android/avd
 export PATH=$PATH:$ANDROID_AVD_HOME
 ```
 
-5. Create an folder under the SDK root named avds and create an Android emulator: avdmanager create avd -n emulator0 -k "system-images;android-23;google_apis;x86_64" -p avds/emulator0
+5. Create an folder under the SDK root named avds and create an Android emulator: avdmanager create avd -n emulator0 -k "system-images;android-33;google_apis;x86_64" -p avds/emulator0
 
 6. modify the emulator configuration to change the screen size of your emulator:
-In our evaluation, we set an emulator with 2GB RAM, 1GB SdCard, 1GB internal storage and 256MB heap size (the file for modification usually is: ~/.android/avd/emulator.avd/config.ini)
+In our evaluation, we set an emulator with 2GB RAM, 1GB SdCard, 1GB internal storage and 256MB heap size (the file for modification usually is: ```~/.android/avd/emulator.avd/config.ini```)
 
 7. Launch the emulator: ```emulator -avd emulator0 -no-window -no-audio -wipe-data -port 5554```
 
