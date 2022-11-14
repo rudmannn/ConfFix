@@ -1,2 +1,7 @@
 
 .DS_Store
+*.iml
+source_code/.idea/inspectionProfiles/profiles_settings.xml
+source_code/.idea/misc.xml
+source_code/.idea/modules.xml
+source_code/.idea/vcs.xml
