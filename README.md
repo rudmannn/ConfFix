@@ -1,6 +1,6 @@
 # ConfFix
 
-This repository contains the ConfFix tool, the evaluation detail and the benchmark of real-world configuration compatibility issues, which are available in three separate folders: tool and source code, evaluation, and DataSet.
+This repository contains the ConfFix tool, the evaluation detail and the benchmark of real-world configuration compatibility issues, which are available in three separate folders: source code, evaluation, and DataSet.
 
 # How ConfFix works
 We give the video clip on how ConfFix repairs configuration compatibility issues provided in our motivating example.
