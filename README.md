@@ -28,23 +28,43 @@ For each issue, we provide:
 
 ## Steps
 
-1. create an Android emulator by using [avdmanager](https://developer.android.com/studio/command-line/avdmanager) (see [this link](https://stackoverflow.com/questions/43275238/how-to-set-system-images-path-when-creating-an-android-avd)).
+### 1. Create an emulator
+1. download Android SDK Command line tools [link](https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip)
+Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., /ssddata/yourname/SDK/android_sdk_linux). So now the tools path will be /ssddata/yourname/SDK/android_sdk_linux/tools
 
-2. (optional) modify the emulator configuration to ensure optimal testing performance of testing tools:
-In our evaluation, we set an emulator with 2GB RAM, 1GB SdCard, 1GB internal storage and 256MB heap size (the file for modification usually is: ~/.android/avd/Android7.1.avd/config.ini)
+2. Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., /ssddata/yourname/SDK/android_sdk_linux). So now the tools path will be /ssddata/yourname/SDK/android_sdk_linux/tools
 
-3. install uiautomator2, which is used for executing test scripts
+3. Navigate to the SDK root and type in the following commands to install necessary files for the SDK
+```
+(1) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "system-images;android-33;google_apis;x86_64"
+(2) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "platforms;android-33"
+(3) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "platform-tools"
+(4) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "emulator"
+```
+4. Add something into PATH
 
+```
+export ANDROID_HOME=/ssddata/yourname/SDK/android_sdk_linux
+export PATH=$PATH:$ANDROID_HOME:$ANDROID_HOME/emulator:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export ANDROID_AVD_HOME=~/.android/avd
+export PATH=$PATH:$ANDROID_AVD_HOME
+```
+
+5. Create an folder under the SDK root named avds and create an Android emulator: avdmanager create avd -n emulator0 -k "system-images;android-23;google_apis;x86_64" -p avds/emulator0
+
+6. modify the emulator configuration to ensure optimal testing performance of testing tools:
+In our evaluation, we set an emulator with 2GB RAM, 1GB SdCard, 1GB internal storage and 256MB heap size (the file for modification usually is: ~/.android/avd/emulator.avd/config.ini)
+
+7. Launch the emulator: ```emulator -avd emulator0 -no-window -no-audio -wipe-data -port 5554```
+
+
+### Install UIAutomator2
+
+Install uiautomator2, which is used for executing test scripts
 ```
 pip3 install --upgrade --pre uiautomator2
 ```
 
 ****
 Here are links.
-
-| Syntax      | Description | Video    |
-| :---        |    :----:   |          ---: |
-| Header      | [Picture](https://github.com/rudmannn/ConfFix/blob/main/reproduction_videos/Buran/27.png)      | [Play](https://github.com/rudmannn/ConfFix/blob/main/reproduction_videos/Buran/27.webm)   |
-| Paragraph   | Text        | And more      |
-
-
