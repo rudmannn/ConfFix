@@ -41,3 +41,10 @@ pip3 install --upgrade --pre uiautomator2
 
 ****
 Here are links.
+
+| Syntax      | Description | Video    |
+| :---        |    :----:   |          ---: |
+| Header      | [Picture](https://github.com/rudmannn/ConfFix/blob/main/reproduction_videos/Buran/27.png)      | [Play](https://github.com/rudmannn/ConfFix/blob/main/reproduction_videos/Buran/27.webm)   |
+| Paragraph   | Text        | And more      |
+
+
