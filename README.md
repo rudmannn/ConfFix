@@ -30,6 +30,7 @@ For each issue, we provide:
 
 ### 1. Create an emulator
 1. download Android SDK Command line tools [link](https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip)
+
 Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., /ssddata/yourname/SDK/android_sdk_linux). So now the tools path will be /ssddata/yourname/SDK/android_sdk_linux/tools
 
 2. Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., /ssddata/yourname/SDK/android_sdk_linux). So now the tools path will be /ssddata/yourname/SDK/android_sdk_linux/tools
