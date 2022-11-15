@@ -45,7 +45,7 @@ export PATH=$PATH:$ANDROID_AVD_HOME
 5. Create an folder under the SDK root named avds and create an Android emulator: 
 ```avdmanager create avd -n emulator0 -k "system-images;android-33;google_apis;x86_64" -p avds/emulator0```
 
-To run ConfFix, please also create another emulator for the issue-inducing API level, as the following example.
+  To run ConfFix, please also create another emulator for the issue-inducing API level, as the following example.
 ```avdmanager create avd -n emulator0 -k "system-images;android-22;google_apis;x86_64" -p avds/emulator1```
 
 6. Modify the emulator configuration to change the screen size of your emulator:
