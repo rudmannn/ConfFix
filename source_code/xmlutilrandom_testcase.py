@@ -686,16 +686,17 @@ def xmlElementByAttributes(xmlRoot, issueInducingAttribute):
 if __name__ == '__main__':
     starttime = datetime.datetime.now()
     baseDeviceId = sys.argv[1]
-    apkPath = sys.argv[2]
-    xmlPath = appProjectPath+sys.argv[3]
-    xmlElemTag = sys.argv[4]
-    issueInducingAttribute = sys.argv[5]
-    dataformat = sys.argv[6]
-    testApkPath = sys.argv[7]
-    testMethod = sys.argv[8]
-    testApkPackage = sys.argv[9]
-    appId = sys.argv[10]
-    resId = sys.argv[11]
+    testDeviceId = sys.argv[2]
+    apkPath = sys.argv[3]
+    xmlPath = appProjectPath+sys.argv[4]
+    xmlElemTag = sys.argv[5]
+    issueInducingAttribute = sys.argv[6]
+    dataformat = sys.argv[7]
+    testApkPath = sys.argv[8]
+    testMethod = sys.argv[9]
+    testApkPackage = sys.argv[10]
+    appId = sys.argv[11]
+    resId = sys.argv[12]
 
     buildSignedTestApk(testApkPath)
     testApkPath = str(testApkPath).replace('.apk','_signed.apk')
