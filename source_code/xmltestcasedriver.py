@@ -382,22 +382,24 @@ def fenix__custom_search_engine_1(deviceId, apkPath, imagePath):
 
     d.app_start(appId)
 
-    d(resourceId="org.mozilla.fenix.debug:id/finish_button").click_exists(10)
+    d(resourceId="org.mozilla.fenix.debug:id/finish_button").click_exists(30)
 
-    d(resourceId="org.mozilla.fenix.debug:id/toolbar_wrapper").click_exists(10)
+    d(resourceId="org.mozilla.fenix.debug:id/toolbar_wrapper").click_exists(30)
 
-    d(resourceId="org.mozilla.fenix.debug:id/search_engines_shortcut_button").click_exists(10)
+    d(resourceId="org.mozilla.fenix.debug:id/search_engines_shortcut_button").click_exists(30)
 
+    d(resourceId="org.mozilla.fenix.debug:id/awesome_bar").wait(30)
     d.xpath(
         '//*[@resource-id="org.mozilla.fenix.debug:id/awesome_bar"]/android.view.View[1]/android.view.View[1]/android.view.View[1]').swipe(
         "up")
     d.sleep(2)
 
-    d.xpath('//*[@resource-id="org.mozilla.fenix.debug:id/awesome_bar"]/android.view.View[1]/android.view.View[1]/android.view.View[1]/android.view.View[7]').click_exists(10)
+    d(resourceId="org.mozilla.fenix.debug:id/awesome_bar").wait(30)
+    d.xpath('//*[@resource-id="org.mozilla.fenix.debug:id/awesome_bar"]/android.view.View[1]/android.view.View[1]/android.view.View[1]/android.view.View[7]').click_exists(20)
 
-    d.xpath('//*[@resource-id="org.mozilla.fenix.debug:id/recycler_view"]/android.view.ViewGroup[1]').click_exists(10)
+    d.xpath('//*[@resource-id="org.mozilla.fenix.debug:id/recycler_view"]/android.view.ViewGroup[1]').click_exists(20)
 
-    d.xpath('//*[@resource-id="org.mozilla.fenix.debug:id/search_engine_group"]/android.view.ViewGroup[1]').click_exists(10)
+    d.xpath('//*[@resource-id="org.mozilla.fenix.debug:id/search_engine_group"]/android.view.ViewGroup[1]').click_exists(20)
 
     if d(resourceId="org.mozilla.fenix.debug:id/search_add_custom_engine_search_string_example").exists:
         d(resourceId="org.mozilla.fenix.debug:id/search_add_custom_engine_search_string_example").screenshot().save(imagePath)
@@ -1659,7 +1661,7 @@ def cwa__tan_input_digit(deviceId, apkPath, imagePath):
     d.sleep(3)
     d(resourceId="de.rki.coronawarnapp:id/submission_tan_input").wait(10)
     d.send_keys('3')
-    d.sleep(8)
+    d.sleep(12)
 
     return bounds
 
@@ -1677,7 +1679,7 @@ def cwa__tan_input_digit_error(deviceId, apkPath, imagePath):
 
     d(resourceId="de.rki.coronawarnapp:id/submission_tan_input").wait(10)
     d.send_keys('1')
-    d.sleep(8)
+    d.sleep(12)
 
     return bounds
 
@@ -2119,8 +2121,6 @@ def test_case_driver(test_case_name,deviceId, apkPath, imagePath='./tmps/repair.
         return proton_vpn__activity_tv_login(deviceId, apkPath, imagePath)
     elif test_case_name == 'proton_vpn__dialog_tv_upgrade': #finish
         return proton_vpn__dialog_tv_upgrade(deviceId, apkPath, imagePath)
-    # elif test_case_name == 'collect__item_view_option_paddingStart': #finish
-    #     return collect__item_view_option_paddingStart(deviceId, apkPath, imagePath)
     elif test_case_name == 'cwa__fragment_submission_test_result_available': #finish
         return cwa__fragment_submission_test_result_available(deviceId, apkPath, imagePath)
     elif test_case_name == 'cwa__home_fragment_layout': #finish

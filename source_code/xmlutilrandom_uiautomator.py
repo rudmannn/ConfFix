@@ -19,11 +19,13 @@ xmlPath = appProjectPath+"res/layout/activity_main.xml"
 signedApkPath = "./tmps/signed"+randomNum+".apk"
 before1 = "./tmps/"+randomNum+"before1.txt"
 before1_1 = "./tmps/"+randomNum+"before1_1.txt"
+before1_2 = "./tmps/"+randomNum+"before1_2.txt"
 before2 = "./tmps/"+randomNum+"before2.txt"
 after = "./tmps/"+randomNum+"after.txt"
 apkPath = ""
 apkRootPath = ""
 baseDeviceId = 'emulator-5558'
+testDeviceId = ''
 appId = 'com.example.myapplication'
 activityName = 'com.example.myapplication.MainActivity'
 resId = 'messageText'
@@ -441,9 +443,12 @@ def producingBaselines(xmlRoot, xmlElem, attributeNames, filePath, appProjectRoo
     print("building fields_with_random")
     test_case(deviceId, signedApkPath, "before1")
     test_case(deviceId, signedApkPath, "before1_1")
+    test_case(testDeviceId, signedApkPath, "before1_2")
     fields_before1 = xmlfitness.getFields(before1)
     fields_before1_1 = xmlfitness.getFields(before1_1)
+    fields_before1_2 = xmlfitness.getFields(before1_2)
     b11diff = xmlfitness.compareFieldDiff(xmlElemTag, fields_before1, fields_before1_1)
+    xmlfitness.compareFieldDiff(xmlElemTag, fields_before1, fields_before1_2)
     for k in b11diff.keys():
         if b11diff[k] != 0.0:
             xmlfitness.fields_with_random.append(k)
@@ -565,26 +570,6 @@ def test_case(deviceId, apkPath, mode):
         d.app_install(apkPath)
 
         xmltestcasedriver.test_case_driver(test_case_name, deviceId, apkPath)
-        # temporary close the uiautomator service
-        # d.uiautomator.stop()
-        # print("uiautomator service is temporarily closed to avoid crash")
-        # d.sleep(2)
-        #
-        # try:
-        #     cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell am instrument -w -m -e debug false -e class '"+testMethod+"' "+testApkPackage+"/androidx.test.runner.AndroidJUnitRunner"
-        #     print("cmd:::"+cmd)
-        #     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        #     return_code = p.wait(40)
-        #     print("return_code: "+str(return_code))
-        # except subprocess.TimeoutExpired:
-        #     print("timeout???")
-        #     pass
-        #
-        # d.sleep(2)
-        # print("the test apk has finished running.")
-
-        # d.uiautomator.start()
-        # print("uiautomator service starts again")
 
         # use the command line to obtain the field information
         if mode == "before1":
@@ -592,6 +577,9 @@ def test_case(deviceId, apkPath, mode):
             print("cmd: " + cmd)
         elif mode == "before1_1":
             cmd = "$ANDROID_HOME/platform-tools/adb -s " + deviceId + " shell \"run-as " + appId + " cat /data/user/0/" + appId + "/files/fitness_out.txt\" > " + before1_1
+            print("cmd: " + cmd)
+        elif mode == "before1_2":
+            cmd = "$ANDROID_HOME/platform-tools/adb -s " + deviceId + " shell \"run-as " + appId + " cat /data/user/0/" + appId + "/files/fitness_out.txt\" > " + before1_2
             print("cmd: " + cmd)
         elif mode == "before2":
             cmd = "$ANDROID_HOME/platform-tools/adb -s " + deviceId + " shell \"run-as " + appId + " cat /data/user/0/" + appId + "/files/fitness_out.txt\" > " + before2

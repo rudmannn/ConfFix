@@ -19,11 +19,13 @@ xmlPath = appProjectPath+"res/layout/activity_main.xml"
 signedApkPath = "./tmps/signed"+randomNum+".apk"
 before1 = "./tmps/"+randomNum+"before1.txt"
 before1_1 = "./tmps/"+randomNum+"before1_1.txt"
+before1_2 = "./tmps/"+randomNum+"before1_2.txt"
 before2 = "./tmps/"+randomNum+"before2.txt"
 after = "./tmps/"+randomNum+"after.txt"
 apkPath = ""
 apkRootPath = ""
 baseDeviceId = 'emulator-5558'
+testDeviceId = ''
 appId = 'com.example.myapplication'
 activityName = 'com.example.myapplication.MainActivity'
 resId = 'messageText'
@@ -455,8 +457,10 @@ def producingBaselines(xmlRoot, xmlElem, attributeNames, filePath, appProjectRoo
     print("building fields_with_random")
     test_case(deviceId, signedApkPath, "before1")
     test_case(deviceId, signedApkPath, "before1_1")
+    test_case(testDeviceId, signedApkPath, "before1_2")
     fields_before1 = xmlfitness.getFields(before1)
     fields_before1_1 = xmlfitness.getFields(before1_1)
+    xmlfitness.getFields(before1_2)
     b11diff = xmlfitness.compareFieldDiff(xmlElemTag, fields_before1, fields_before1_1)
     for k in b11diff.keys():
         if b11diff[k] != 0.0:
@@ -584,7 +588,7 @@ def test_case(deviceId, apkPath, mode):
         d.sleep(1)
 
         try:
-            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell am instrument -w -m -e debug false -e class '"+testMethod+"' "+testApkPackage+"/androidx.test.runner.AndroidJUnitRunner"
+            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell am instrument -w -e debug false -e class '"+testMethod+"' "+testApkPackage+"/androidx.test.runner.AndroidJUnitRunner"
             print("cmd:::"+cmd)
             p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
             stdoutdata, stderrdata = p.communicate()
@@ -606,6 +610,9 @@ def test_case(deviceId, apkPath, mode):
             print("cmd: "+cmd)
         if mode == "before1_1":
             cmd = "$ANDROID_HOME/platform-tools/adb -s " + deviceId + " shell \"run-as " + appId + " cat /data/user/0/" + appId + "/files/fitness_out.txt\" > " + before1_1
+            print("cmd: " + cmd)
+        if mode == "before1_2":
+            cmd = "$ANDROID_HOME/platform-tools/adb -s " + deviceId + " shell \"run-as " + appId + " cat /data/user/0/" + appId + "/files/fitness_out.txt\" > " + before1_2
             print("cmd: " + cmd)
         elif mode == "before2":
             cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/fitness_out.txt\" > "+before2
