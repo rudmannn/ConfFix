@@ -2,9 +2,6 @@
 
 This repository contains the ConfFix tool, the evaluation detail and the benchmark of real-world configuration compatibility issues, which are available in three separate folders: empirical dataset, source code, evaluation.
 
-# How ConfFix works
-We give the video clip on how ConfFix repairs configuration compatibility issues provided in our motivating example.
-
 # ConfFix Dataset
 
 The dataset for evaluating ConfFix contains 81 reproducible CC issues. Please check ```./evaluation/issue_in_the_latest_version.xlsx``` and ```./evaluation/issue_in_the_past.xlsx``` for the information of 81 CC issues, including the reproduction videos and our submitted pull requests and **issue reports** to the app developers. **We submitted patches for 39 successfully-repaired issues, of which 38 have been confirmed and merged by the app developers.** For the detail please check ```./evaluation/issue_in_the_latest_version.xlsx```.
