@@ -54,8 +54,11 @@ To achieve this, modify the emulator configuration files (the file usually is: `
 Please change ```hw.lcd.density=560```
 
 7. Launch the emulators: 
+
 ```emulator @emulator0 -wipe-data -no-window -no-audio -memory 4096 -port 5554 -partition-size 8192 -skin 1440x3120```
+
 ```emulator @emulator1 -wipe-data -no-window -no-audio -memory 4096 -port 5556 -partition-size 8192 -skin 1440x3120```
+
 This command launches the emulator ```emulator0``` and ```emulator1``` in the port 5554 and 5556. We set the device with 4GB RAM, 8GB disk, and 1440x3120 resolution. The resolution is set following the device profile of Google Pixel 6 Pro.
 
 
