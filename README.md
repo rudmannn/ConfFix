@@ -72,10 +72,13 @@ pip3 install --upgrade --pre uiautomator2
 export BUILD_TOOL_ROOT=$ANDROID_SDK_ROOT/build-tools/31.0.0
 ```
 
-3. To reproduce the experiment result, we have prepared a ```.sh``` file for each issue to run. For example, to try the example shown in the video clip, use the following command.
+3. To reproduce the experiment result, we have prepared a ```.sh``` file for each issue to run. For example, to try cwa_tan_input_digit_error, use the following command.
 ```
-python -u xmlutilrandom_uiautomator.py emulator-5554 emulator-5556 path-to-the-subject-apks/Corona-Warn-App-tan_input_digit.apk res/drawable/tan_input_digit.xml item gravity0height dimension de.rki.coronawarnapp tan_input_digit cwa__tan_input_digit
+python -u xmlutilrandom_uiautomator.py emulator-5554 emulator-5556 path-to-the-subject-apks/Corona-Warn-App-tan_input_digit.apk res/drawable/tan_input_digit_error.xml item gravity0height dimension de.rki.coronawarnapp tan_input_digit_error cwa__tan_input_digit_error
 ```
+ConfFix generates a patch as follows
+<img width="80" alt="image" src="https://user-images.githubusercontent.com/109571086/201920092-da66cd8e-8475-47d2-b148-06d5cb31e525.png">
+
 
 For the test scripts written by Espresso, the command to run ConfFix is as follows.
 ```
