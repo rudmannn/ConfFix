@@ -76,11 +76,6 @@ export BUILD_TOOL_ROOT=$ANDROID_SDK_ROOT/build-tools/31.0.0
 ```
 python -u xmlutilrandom_uiautomator.py emulator-5554 emulator-5556 path-to-the-subject-apks/Corona-Warn-App-tan_input_digit.apk res/drawable/tan_input_digit_error.xml item gravity0height dimension de.rki.coronawarnapp tan_input_digit_error cwa__tan_input_digit_error
 ```
-ConfFix generates a patch as follows
-<img width="80" alt="image" src="https://user-images.githubusercontent.com/109571086/201920092-da66cd8e-8475-47d2-b148-06d5cb31e525.png">
+ConfFix generates a patch as follows.
+![conffix-demo](https://user-images.githubusercontent.com/109571086/201925686-3bf70abe-f62d-46b4-a929-6885a4d2f76c.png)
 
-
-For the test scripts written by Espresso, the command to run ConfFix is as follows.
-```
-python -u xmlutilrandom_testcase.py emulator-5554 emulator-5556 path-to-the-subject-apks/FairEmail-tvPrivacy.apk res/layout-v22/fragment_setup.xml TextView drawableTint color path-to-the-espresso-test-apks/FairEmail-androidTest.apk ConfFixTest#tvTutorials eu.faircode.email.debug.test eu.faircode.email.debug tvTutorials
-```
