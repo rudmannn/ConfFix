@@ -19,6 +19,7 @@ xmlPath = appProjectPath+"res/layout/activity_main.xml"
 signedApkPath = "./tmps/signed"+randomNum+".apk"
 before1 = "./tmps/"+randomNum+"before1.txt"
 before1_1 = "./tmps/"+randomNum+"before1_1.txt"
+before1_2 = "./tmps/"+randomNum+"before1_2.txt"
 before2 = "./tmps/"+randomNum+"before2.txt"
 after = "./tmps/"+randomNum+"after.txt"
 apkPath = ""
@@ -478,6 +479,9 @@ def producingBaselines(xmlRoot, xmlElem, attributeNames, filePath, appProjectRoo
     print("building fields_with_random")
     test_case(deviceId, signedApkPath, "before1")
 
+    # check the plausibility in the issue-inducing API levels
+    test_case(deviceId, signedApkPath, "before1_2")
+
     # removing attribute
     removeAttribute(xmlElem, attributeNames, filePath, appProjectRootPath, appProjectName, deviceId)
     test_case(deviceId, signedApkPath, "before2")
@@ -610,6 +614,9 @@ def test_case(deviceId, apkPath, mode):
         # use the command line to obtain the field information
         if mode == "before1":
             cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before1
+            print("cmd: "+cmd)
+        if mode == "before1_2":
+            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before1_2
             print("cmd: "+cmd)
         elif mode == "before2":
             cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before2

@@ -1,13 +1,18 @@
 # ConfFix
 
-This repository contains the ConfFix tool, the evaluation detail and the benchmark of real-world configuration compatibility issues, which are available in three separate folders: empirical dataset, source code, evaluation.
+This repository contains the ConfFix tool, the evaluation detail and the benchmark of real-world configuration compatibility issues.
 
 # ConfFix Dataset
 
+Please find ```Section_3.xlsx``` for the detailed information of our empirical study in Section 3. 
+
 The dataset for evaluating ConfFix contains 81 reproducible CC issues. Please check ```./evaluation/issue_in_the_latest_version.xlsx``` and ```./evaluation/issue_in_the_past.xlsx``` for the information of 81 CC issues, including the reproduction videos and our submitted pull requests and **issue reports** to the app developers. **We submitted patches for 39 successfully-repaired issues, of which 38 have been confirmed and merged by the app developers.** For the detail please check ```./evaluation/issue_in_the_latest_version.xlsx```.
 
-The APK files and test cases of these 81 CC issues are provided in conffix_subjects.zip, which you can find in this project release due to the maximum size limit of GitHub. We provide  ```.sh``` file for each issue to help you reproduce the results of ConfFix.
-We also release the experimental results of ConfFix, XFix and Lint in ```./evaluation/Lint&ConfFix&XFix output.xlsx```. The raw outputs of ConfFix and XFix can be found in ```./evaluation/raw_outputs/``` folders.
+The APK files and test cases of these 81 CC issues are provided [here](https://1drv.ms/u/s!AnUUjcFFYAJEbPxHcm9MlkrX8zw?e=twSegT). Please put them inside the ```./source_code``` folder when you run the experiment.
+
+We provide a  ```.sh``` file for each issue to help you reproduce the results of ConfFix (```conffix-exp-sh.rar```) and XFix (```xfix-exp-sh.rar```) . Put them in the root directory of ```./source_code``` to make them a try.
+
+We also release the experimental results of ConfFix, XFix and Lint in ```./evaluation/Lint&ConfFix&XFix output.xlsx```. Besides, the raw outputs of ConfFix and XFix can be found in ```./evaluation/raw_outputs/``` folders.
 
 # Build and Use ConfFix from Scratch
 
@@ -76,10 +81,11 @@ pip3 install --upgrade --pre uiautomator2
 export BUILD_TOOL_ROOT=$ANDROID_SDK_ROOT/build-tools/31.0.0
 ```
 
-3. To reproduce the experiment result, we have prepared a ```.sh``` file for each issue to run. For example, to try cwa_tan_input_digit_error, use the following command.
+3. To reproduce the experiment result, we have prepared a ```.sh``` file for each issue to run (```./source_code/conffix-exp-sh.zip``` and ```./source_code/xfix-exp-sh.zip```). For example, to try cwa_tan_input_digit_error, use the following command.
 ```
-python -u xmlutilrandom_uiautomator.py emulator-5554 emulator-5556 path-to-the-subject-apks/Corona-Warn-App-tan_input_digit.apk res/drawable/tan_input_digit_error.xml item gravity0height dimension de.rki.coronawarnapp tan_input_digit_error cwa__tan_input_digit_error
+sh exp_cwa_tan_input_digit_error.sh emulator-5554 emulator-5556
 ```
+where ```emulator-5554``` stands for the devices in the target API level, and ```emulator-5556``` stands for the devices in the issue-inducing API level.
 ConfFix generates a patch as follows.
 ![conffix-demo](https://user-images.githubusercontent.com/109571086/201925686-3bf70abe-f62d-46b4-a929-6885a4d2f76c.png)
 
