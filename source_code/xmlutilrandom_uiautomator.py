@@ -647,7 +647,7 @@ def buildSignedApk(appProjectRootPath, appProjectName):
     generated_aligned_apk_path = appProjectPath + "dist/" + appProjectName + "_aligned.apk"
 
     p = subprocess.Popen("$ANDROIDBUILDPATH/zipalign -f -v 4 "+generated_apk_path+" "+generated_aligned_apk_path+" & "
-                         "$ANDROIDBUILDPATH/apksigner sign --ks /ssddata1/hhuangas/conffix-python-test/image_differences/debug.keystore --ks-key-alias key1 --ks-pass pass:android "
+                         "$ANDROIDBUILDPATH/apksigner sign --ks ./debug.keystore --ks-key-alias key1 --ks-pass pass:android "
                          "--out " + testApkPath + " \""
                          + generated_aligned_apk_path + "\"", shell=True, stdout=subprocess.PIPE)
 
