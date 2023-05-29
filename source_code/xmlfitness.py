@@ -79,51 +79,53 @@ def getOriginalFeatureMatchingFitness(before1, before2):
 
 
 def getFitnessByFields(tag, before1, before2, after):
-    fields_before1 = getFields(before1)
-    fields_before2 = getFields(before2)
-    fields_after = getFields(after)
+    for i in range(0,5):
+        fields_before1 = getFields(before1)
+        fields_before2 = getFields(before2)
+        fields_after = getFields(after)
 
-    print("compare field diff_before")
-    diff_before = compareFieldDiff(tag, fields_before1, fields_before2)
-    print("compare field diff_after")
-    diff_after = compareFieldDiff(tag, fields_before1, fields_after)
-    # print("diff_before: "+str(diff_before))
-    # print("diff_after: " + str(diff_after))
-    total = 0
-    total_diff_vars = 0
+        print("compare field diff_before")
+        diff_before = compareFieldDiff(tag, fields_before1, fields_before2)
+        print("compare field diff_after")
+        diff_after = compareFieldDiff(tag, fields_before1, fields_after)
+        # print("diff_before: "+str(diff_before))
+        # print("diff_after: " + str(diff_after))
+        total = 0
+        total_diff_vars = 0
 
-    subfitness = 0.0
+        subfitness = 0.0
 
-    for key_before in diff_before:
-        if key_before.count(".") > diff_k and diff_k != -1:
-            print("skip key_before::"+key_before)
-            continue
-        if not fields_with_random.__contains__(key_before):
-            if diff_after.__contains__(key_before):
-                total += 1
-                diff_before_value = diff_before[key_before]
-                diff_after_value = diff_after[key_before]
-                # print("key: "+str(key_before))
-                # print("diff_before_value:" + str(diff_before_value))
-                # print("diff_after_value:" + str(diff_after_value))
-                if diff_after_value == 0.0 and diff_before_value == 0.0:
-                    subfitness += 0.0
-                else:
-                    if diff_after_value > diff_before_value:
-                        # print("value after > value before")
-                        # print(key_before)
-                        subfitness += 1.0
+        for key_before in diff_before:
+            if key_before.count(".") > diff_k and diff_k != -1:
+                print("skip key_before::"+key_before)
+                continue
+            if not fields_with_random.__contains__(key_before):
+                if diff_after.__contains__(key_before):
+                    total += 1
+                    diff_before_value = diff_before[key_before]
+                    diff_after_value = diff_after[key_before]
+                    # print("key: "+str(key_before))
+                    # print("diff_before_value:" + str(diff_before_value))
+                    # print("diff_after_value:" + str(diff_after_value))
+                    if diff_after_value == 0.0 and diff_before_value == 0.0:
+                        subfitness += 0.0
                     else:
-                        # print("key_before: "+str(key_before))
-                        subfitness += abs(diff_after_value/diff_before_value)
-                    total_diff_vars += 1
+                        if diff_after_value > diff_before_value:
+                            # print("value after > value before")
+                            # print(key_before)
+                            subfitness += 1.0
+                        else:
+                            # print("key_before: "+str(key_before))
+                            subfitness += abs(diff_after_value/diff_before_value)
+                        total_diff_vars += 1
 
-    if total_diff_vars == 0:
-        subfitness = 1.0
-        print("fitness is 1.0 because of the empty key_after set")
+        if total_diff_vars == 0:
+            # subfitness = 1.0
+            continue
+            # return subfitness
+        subfitness = subfitness / total_diff_vars
         return subfitness
-    subfitness = subfitness / total_diff_vars
-    return subfitness
+    return 1.0
 
 def getFields(path):
     fields_dict = {}
@@ -308,7 +310,7 @@ def calculateK(fields1, fields2):
             value_before = fields1[key_before]
             value_after = fields2[key_before]
             if value_before != value_after:
-                if str(key_before).endswith('.mGravity'): # TODO fix the bug for not suitable "mGravity"
+                if str(key_before).endswith('.mGravity'):
                     continue
                 global diff_k
                 if str(key_before).__contains__("."):

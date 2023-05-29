@@ -12,14 +12,14 @@ import os
 import xmltestcasedriver
 
 randomNum = str(random.randint(100, 8000))
-xmlBase = './xml_base.xml'
-imageBase = './image_base.png'
+conffix_root_path = "/ssddata1/hhuangas/conffix-python-test/image_differences"
+xmlBase = conffix_root_path + '/xml_base.xml'
+imageBase = conffix_root_path + '/image_base.png'
 appProjectPath = "./tmps/app-debug"+randomNum+"/"
 xmlPath = appProjectPath+"res/layout/activity_main.xml"
 signedApkPath = "./tmps/signed"+randomNum+".apk"
 before1 = "./tmps/"+randomNum+"before1.txt"
 before1_1 = "./tmps/"+randomNum+"before1_1.txt"
-before1_2 = "./tmps/"+randomNum+"before1_2.txt"
 before2 = "./tmps/"+randomNum+"before2.txt"
 after = "./tmps/"+randomNum+"after.txt"
 apkPath = ""
@@ -34,6 +34,7 @@ lineNum = 2
 currentBoundFitness = 9999999
 bboundsBase = None
 bboundsTest = None
+# apkPath = "/Users/huanghuaxun/Downloads/app-debug/dist/signed.apk"
 optimalAttrValue = {}
 optimalFitness = {}
 optimalAttrImprovement = {}
@@ -479,9 +480,6 @@ def producingBaselines(xmlRoot, xmlElem, attributeNames, filePath, appProjectRoo
     print("building fields_with_random")
     test_case(deviceId, signedApkPath, "before1")
 
-    # check the plausibility in the issue-inducing API levels
-    test_case(deviceId, signedApkPath, "before1_2")
-
     # removing attribute
     removeAttribute(xmlElem, attributeNames, filePath, appProjectRootPath, appProjectName, deviceId)
     test_case(deviceId, signedApkPath, "before2")
@@ -595,7 +593,7 @@ def test_case(deviceId, apkPath, mode):
         d.sleep(1)
 
         try:
-            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell am instrument -w -m -e debug false -e class '"+testMethod+"' "+testApkPackage+"/androidx.test.runner.AndroidJUnitRunner"
+            cmd = "/data/hhuangas/android_sdk/platform-tools/adb -s "+deviceId+" shell am instrument -w -m -e debug false -e class '"+testMethod+"' "+testApkPackage+"/androidx.test.runner.AndroidJUnitRunner"
             print("cmd:::"+cmd)
             p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
             stdoutdata, stderrdata = p.communicate()
@@ -613,16 +611,13 @@ def test_case(deviceId, apkPath, mode):
 
         # use the command line to obtain the field information
         if mode == "before1":
-            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before1
-            print("cmd: "+cmd)
-        if mode == "before1_2":
-            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before1_2
+            cmd = "/data/hhuangas/android_sdk/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before1
             print("cmd: "+cmd)
         elif mode == "before2":
-            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before2
+            cmd = "/data/hhuangas/android_sdk/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+before2
             print("cmd: " + cmd)
         elif mode == "after":
-            cmd = "$ANDROID_HOME/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+after
+            cmd = "/data/hhuangas/android_sdk/platform-tools/adb -s "+deviceId+" shell \"run-as "+appId+" cat /data/user/0/"+appId+"/files/bounds_out.txt\" > "+after
             print("cmd: " + cmd)
 
         p = subprocess.Popen(cmd, shell=True)
@@ -643,8 +638,8 @@ def test_case(deviceId, apkPath, mode):
 def buildSignedTestApk(apk_path):
     generated_aligned_apk_path = str(apk_path).replace('.apk','_aligned.apk')
     generated_aligned_signed_path = str(apk_path).replace('.apk', '_signed.apk')
-    cmd = "$BUILD_TOOL_ROOT/zipalign -f -v 4 " + apk_path + " " + generated_aligned_apk_path + " & " +\
-          "$BUILD_TOOL_ROOT/apksigner sign --ks ./debug.keystore --ks-key-alias key1 --ks-pass pass:android "+\
+    cmd = "$ANDROIDBUILDPATH/zipalign -f -v 4 " + apk_path + " " + generated_aligned_apk_path + " & " +\
+          "$ANDROIDBUILDPATH/apksigner sign --ks /ssddata1/hhuangas/conffix-python-test/image_differences/debug.keystore --ks-key-alias key1 --ks-pass pass:android "+\
           "--out " + generated_aligned_signed_path + " \""+\
           generated_aligned_apk_path + "\""
     print("sign test apk cmd::::"+cmd)
@@ -656,7 +651,7 @@ def buildSignedTestApk(apk_path):
 def buildSignedApk(appProjectRootPath, appProjectName):
     build_signed_apk_start_time = datetime.datetime.now()
     appProjectPath = appProjectRootPath
-    cmd = "cd "+appProjectPath+" & cd .. & java -jar ./apktool.jar b --use-aapt2 " + appProjectPath + " -o "+appProjectPath+"/dist/app-debug.apk && cd .."
+    cmd = "cd "+appProjectPath+" & cd .. & java -jar /ssddata1/hhuangas/apktool.jar b --use-aapt2 " + appProjectPath + " -o "+appProjectPath+"/dist/app-debug.apk && cd .."
     print("cmd: " + str(cmd))
     p = subprocess.Popen(cmd, shell=True)
     return_code = p.wait()
@@ -666,8 +661,8 @@ def buildSignedApk(appProjectRootPath, appProjectName):
     generated_apk_path = appProjectPath+"dist/"+appProjectName+".apk"
     generated_aligned_apk_path = appProjectPath + "dist/" + appProjectName + "_aligned.apk"
 
-    p = subprocess.Popen("$BUILD_TOOL_ROOT/zipalign -f -v 4 "+generated_apk_path+" "+generated_aligned_apk_path+" & "
-                         "$BUILD_TOOL_ROOT/apksigner sign --ks ./debug.keystore --ks-key-alias key1 --ks-pass pass:android "
+    p = subprocess.Popen("$ANDROIDBUILDPATH/zipalign -f -v 4 "+generated_apk_path+" "+generated_aligned_apk_path+" & "
+                         "$ANDROIDBUILDPATH/apksigner sign --ks /ssddata1/hhuangas/conffix-python-test/image_differences/debug.keystore --ks-key-alias key1 --ks-pass pass:android "
                          "--out " + testApkPath + " \""
                          + generated_aligned_apk_path + "\"", shell=True, stdout=subprocess.PIPE)
 
@@ -697,17 +692,16 @@ def xmlElementByAttributes(xmlRoot, issueInducingAttribute):
 if __name__ == '__main__':
     starttime = datetime.datetime.now()
     baseDeviceId = sys.argv[1]
-    testDeviceId = sys.argv[2]
-    apkPath = sys.argv[3]
-    xmlPath = appProjectPath+sys.argv[4]
-    xmlElemTag = sys.argv[5]
-    issueInducingAttribute = sys.argv[6]
-    dataformat = sys.argv[7]
-    testApkPath = sys.argv[8]
-    testMethod = sys.argv[9]
-    testApkPackage = sys.argv[10]
-    appId = sys.argv[11]
-    resId = sys.argv[12]
+    apkPath = sys.argv[2]
+    xmlPath = appProjectPath+sys.argv[3]
+    xmlElemTag = sys.argv[4]
+    issueInducingAttribute = sys.argv[5]
+    dataformat = sys.argv[6]
+    testApkPath = sys.argv[7]
+    testMethod = sys.argv[8]
+    testApkPackage = sys.argv[9]
+    appId = sys.argv[10]
+    resId = sys.argv[11]
     if xmlPath.__contains__("/drawable"):
         print("Android cannot locate the layout bounds with the drawable ID, terminate")
         exit(0)
@@ -753,7 +747,7 @@ if __name__ == '__main__':
 
     buildSignedTestApk(testApkPath)
     testApkPath = str(testApkPath).replace('.apk','_signed.apk')
-    cmd = "cd "+apkRootPath+" & java -jar ./apktool.jar d -s -f "+apkPath+" -o " \
+    cmd = "cd "+apkRootPath+" & java -jar /ssddata1/hhuangas/apktool.jar d -s -f "+apkPath+" -o " \
           ""+appProjectPath
     print("cmd: " + str(cmd))
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

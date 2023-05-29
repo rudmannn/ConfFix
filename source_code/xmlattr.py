@@ -1,5 +1,21 @@
 import random
 
+def getEnumAttributes(tag):
+    if tag.__contains__("TextView"):
+        return ["{http://schemas.android.com/apk/res/android}textAppearance",
+                "{http://schemas.android.com/apk/res/android}hint",
+                "{http://schemas.android.com/apk/res/android}text",
+                "{http://schemas.android.com/apk/res/android}editorExtras",
+                "{http://schemas.android.com/apk/res/android}textCursorDrawable",
+                "{http://schemas.android.com/apk/res/android}textSelectHandleLeft",
+                "{http://schemas.android.com/apk/res/android}textSelectHandleRight",
+                "{http://schemas.android.com/apk/res/android}textSelectHandle",
+                "{http://schemas.android.com/apk/res/android}textEditSuggestionItemLayout",
+                "{http://schemas.android.com/apk/res/android}textEditSuggestionHighlightStyle",
+                "{http://schemas.android.com/apk/res/android}autoSizePresetSizes",
+                "{http://schemas.android.com/apk/res/android}textAppearance"
+                ]
+
 def getResourceIdAttributes(tag):
     if tag.__contains__("TextView"):
         return ["{http://schemas.android.com/apk/res/android}textAppearance",
@@ -111,7 +127,6 @@ def getIntAttributes(tag):
                 "{http://schemas.android.com/apk/res/android}minLines",
                 "{http://schemas.android.com/apk/res/android}textFontWeight",
                 "{http://schemas.android.com/apk/res/android}maxEms"]
-
 
 
 def getFloatAttributes(tag):

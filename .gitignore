@@ -9,3 +9,6 @@ reproduction_videos/Corona-Warn/.DS_Store
 reproduction_videos/Corona-Warn/.DS_Store
 reproduction_videos/Corona-Warn/.DS_Store
 reproduction_videos/Corona-Warn/.DS_Store
+*.pyc
+*.png
+*.webm
