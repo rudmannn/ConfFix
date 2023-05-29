@@ -25,48 +25,50 @@ We also release the experimental results of ConfFix, XFix and Lint in ```./evalu
 ## Steps
 
 ### 1. Create emulators
-1. Download Android SDK Command line tools [link](https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip)
 
-Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., ```/ssddata/yourname/SDK/android_sdk_linux```). So now the tools path will be ```/ssddata/yourname/SDK/android_sdk_linux/tools```
-
-2. Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., ```/ssddata/yourname/SDK/android_sdk_linux```). So now the tools path will be ```/ssddata/yourname/SDK/android_sdk_linux/tools```
-
+1. Download Android SDK Command line tools [link](https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip) and unzip the .zip file.
+2. Rename cmdline-tools to be tools and put it under an SDK root folder (e.g., `/ssddata/SDK/android_sdk_linux`). So now the tools path will be `/ssddata/SDK/android_sdk_linu/tools`
 3. Navigate to the SDK root and type in the following commands to install necessary files for the SDK
+
 ```
-(1) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "system-images;android-33;google_apis;x86_64"
-(2) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "platforms;android-33"
-(3) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "platform-tools"
-(4) tools/bin/sdkmanager --sdk_root=/ssddata/yourname/SDK/android_sdk_linux --install "emulator"
+(1) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "system-images;android-33;google_apis;x86_64"
+(2) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "platforms;android-33"
+(3) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "platform-tools"
+(4) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "emulator"
 ```
+
 4. Add something into PATH
 
 ```
-export ANDROID_HOME=/ssddata/yourname/SDK/android_sdk_linux
+export ANDROID_HOME=/ssddata/SDK/android_sdk_linux
 export PATH=$PATH:$ANDROID_HOME:$ANDROID_HOME/emulator:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 export ANDROID_AVD_HOME=~/.android/avd
 export PATH=$PATH:$ANDROID_AVD_HOME
 ```
 
-5. Create an folder under the SDK root named avds and create an Android emulator: 
-```avdmanager create avd -n emulator0 -k "system-images;android-33;google_apis;x86_64" -p avds/emulator0```
+5. Create an folder under the SDK root named avds and create an Android emulator: `avdmanager create avd -n emulator0 -k "system-images;android-33;google_apis;x86_64" -p avds/emulator0`
 
-  To run ConfFix, please also create another emulator for the issue-inducing API level, as the following example.
-```avdmanager create avd -n emulator0 -k "system-images;android-22;google_apis;x86_64" -p avds/emulator1```
+6. Modify the emulator configuration to change the screen size of your emulator: In our evaluation, we set an emulator with 560dpi density. The density is set following the device profile of Google Pixel 6 Pro. To achieve this, modify the emulator configuration files (the file usually is: `./emulator0/config.ini`). Please change `hw.lcd.density=560`
 
-6. Modify the emulator configuration to change the screen size of your emulator:
-In our evaluation, we set an emulator with 560dpi density. The density is set following the device profile of Google Pixel 6 Pro.
-To achieve this, modify the emulator configuration files (the file usually is: ```./emulator0/config.ini```).
-Please change ```hw.lcd.density=560```
+7. Launch the emulators:
 
-7. Launch the emulators: 
+- Copy the essential files
 
-```emulator @emulator0 -wipe-data -no-window -no-audio -memory 4096 -port 5554 -partition-size 8192 -skin 1440x3120```
+```
+cd /SDK/android_sdk_linux
+mkdir android_sdk_linux && cd android_sdk_linux && mkdir system-images
+cd /SDK/android_sdk_linux
+cp system-images/* ./android_sdk_linux/system-images/ -r
+```
 
-```emulator @emulator1 -wipe-data -no-window -no-audio -memory 4096 -port 5556 -partition-size 8192 -skin 1440x3120```
+- Launch the emulator
 
-This command launches the emulator ```emulator0``` and ```emulator1``` in the port 5554 and 5556. We set the device with 4GB RAM, 8GB disk, and 1440x3120 resolution. The resolution is set following the device profile of Google Pixel 6 Pro.
+```
+emulator @emulator0 -wipe-data -no-window -no-audio -memory 4096 -port 5554 -partition-size 8192 -skin 1440x3120 “android_sdk_linux/....”
+```
 
+This command launches the emulator `emulator0` in the port 5554. We set the device with 4GB RAM, 8GB disk, and 1440x3120 resolution. The resolution is set following the device profile of Google Pixel 6 Pro.
 
 ### 2. Run ConfFix
 
@@ -78,7 +80,8 @@ pip3 install --upgrade --pre uiautomator2
 2. Add zipaligner and apksigner, which are used to sign the apk files generated by apktool. You can find zipaligner and apksigner in ```android_sdk/build-tools/[version_number]``` (the version number of the build tools you installed). For example, you may add the following environment variable.
 
 ```
-export BUILD_TOOL_ROOT=$ANDROID_SDK_ROOT/build-tools/31.0.0
+export ANDROIDBUILDPATH=$ANDROID_SDK_ROOT/build-tools/31.0.0
+export ANDROIDPLATFORMPATH=$ANDROID_SDK_ROOT/platform-tools
 ```
 
 3. To reproduce the experiment result, we have prepared a ```.sh``` file for each issue to run (```./source_code/conffix-exp-sh.zip``` and ```./source_code/xfix-exp-sh.zip```). For example, to try cwa_tan_input_digit_error, use the following command.

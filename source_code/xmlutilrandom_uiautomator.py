@@ -636,7 +636,7 @@ def buildSignedTestApk(apk_path):
 def buildSignedApk(appProjectRootPath, appProjectName):
     build_signed_apk_start_time = datetime.datetime.now()
     appProjectPath = appProjectRootPath
-    cmd = "cd "+appProjectPath+" & cd .. & java -jar /ssddata1/hhuangas/apktool.jar b --use-aapt2 " + appProjectPath + " -o "+appProjectPath+"/dist/app-debug.apk && cd .."
+    cmd = "cd "+appProjectPath+" & cd .. & java -jar ./apktool.jar b --use-aapt2 " + appProjectPath + " -o "+appProjectPath+"/dist/app-debug.apk && cd .."
     print("cmd: " + str(cmd))
     p = subprocess.Popen(cmd, shell=True)
     return_code = p.wait()
@@ -690,7 +690,7 @@ if __name__ == '__main__':
 
     # buildSignedTestApk(apkPath)
     # testApkPath = str(apkPath).replace('.apk','_signed.apk')
-    cmd = "cd "+apkRootPath+" & java -jar /ssddata1/hhuangas/apktool.jar d -s -f "+apkPath+" -o " \
+    cmd = "cd "+apkRootPath+" & java -jar ./apktool.jar d -s -f "+apkPath+" -o " \
           ""+appProjectPath
     print("cmd: " + str(cmd))
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
