@@ -35,6 +35,7 @@ We also release the experimental results of ConfFix, XFix and Lint in ```./evalu
 (2) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "platforms;android-33"
 (3) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "platform-tools"
 (4) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "emulator"
+(5) tools/bin/sdkmanager --sdk_root=/ssddata/SDK/android_sdk_linux --install "build-tools;31.0.0"
 ```
 
 4. Add something into PATH
