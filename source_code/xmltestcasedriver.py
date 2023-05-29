@@ -2260,6 +2260,51 @@ def fairemail__fragment_tvBimiUnverified(deviceId, apkPath, imagePath):
     d.app_stop(appId)
     return bounds
 
+
+def organicmaps(deviceId, apkPath, imagePath):
+    appId = 'app.organicmaps'
+    print("begin executing test case")
+    bounds = ()
+    d = u2.connect(deviceId)
+    # d.app_uninstall(appId)
+    d.screen_on()
+    # d.app_install(apkPath)
+    d.app_start(appId)
+    d.sleep(8)
+
+    if d(resourceId=str(appId)+":id/splash").exists:
+        print(d(resourceId=str(appId)+":id/splash").bounds())
+        bounds = d(resourceId=str(appId)+":id/splash").bounds()
+        d(resourceId=str(appId)+":id/splash").screenshot().save(imagePath)
+
+    d.sleep(3)
+    d.app_stop(appId)
+
+    return bounds
+
+
+def lichobile(deviceId, apkPath, imagePath):
+    appId = 'org.lichess.mobileapp.free'
+    print("begin executing test case")
+    bounds = ()
+    d = u2.connect(deviceId)
+    # d.app_uninstall(appId)
+    d.screen_on()
+    # d.app_install(apkPath)
+    d.app_start(appId)
+    d.sleep(8)
+
+    if d(resourceId=str(appId) + ":id/launch_splash").exists:
+        print(d(resourceId=str(appId) + ":id/launch_splash").bounds())
+        bounds = d(resourceId=str(appId) + ":id/launch_splash").bounds()
+        d(resourceId=str(appId) + ":id/launch_splash").screenshot().save(imagePath)
+
+    d.sleep(3)
+    d.app_stop(appId)
+
+    return bounds
+
+
 def test_case_driver(test_case_name,deviceId, apkPath, imagePath='./tmps/repair.png'):
     if test_case_name == 'proton_mail_calendar_logo':  #finish
         return proton_mail_calendar_logo(deviceId, apkPath, imagePath)
@@ -2427,6 +2472,10 @@ def test_case_driver(test_case_name,deviceId, apkPath, imagePath='./tmps/repair.
         return airmessage(deviceId, apkPath, imagePath)
     elif test_case_name == 'MaterialFiles':
         return MaterialFiles(deviceId, apkPath, imagePath)
+    elif test_case_name == 'organicmaps':
+        return organicmaps(deviceId, apkPath, imagePath)
+    elif test_case_name == 'lichobile':
+        return lichobile(deviceId, apkPath, imagePath)
 
 
 if __name__ == '__main__':
